@@ -5,7 +5,7 @@ VERSION	= 1.1
 
 NASM ?= nasm
 
-HAS_LIBDISPATCH ?= 0
+HAS_LIBDISPATCH ?= 1
 
 CC	= clang
 CXX	= clang++

@@ -118,7 +118,7 @@ void StreamCodec::Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode m
 			typedef std::vector<BlockKeyDef> CombinationDef;
 
 			float currentBestLength=std::numeric_limits<float>::infinity();
-			for (uint shift=1;shift<=16;shift++) {
+			for (uint shift=5;shift<=5;shift++) {
 				// create possible combinations
 				std::map<BlockKeyDef,BlockDef> blockMap;
 				std::vector<CombinationDef> combinations;
