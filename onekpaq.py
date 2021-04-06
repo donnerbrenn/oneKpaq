@@ -58,6 +58,9 @@ def main():
         #print(nasmargs)
         subprocess.run(nasmargs, check=True)
         os.chmod(args.output, os.stat(args.output).st_mode|stat.S_IEXEC)
+        wcargs = ["wc","-c",args.output]
+        subprocess.run(wcargs, check=True)
+
 
         return 0
 
