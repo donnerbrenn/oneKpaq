@@ -36,7 +36,7 @@ public:
 	EncodeMode getMode() const { return _mode; }
 	uint GetShift() const { return _shift; }
 
-	void Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode mode,EncoderComplexity complexity,const std::string &cacheFileName);
+	void Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode mode,EncoderComplexity complexity,const std::string &cacheFileName, int start, int end);
 
 	void LoadStream(std::vector<u8> singleStream);
 	std::vector<u8> Decode();

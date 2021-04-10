@@ -47,6 +47,8 @@ int main(int argc,char **argv)
 {
 	if (argc < 2 || !strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
 		fprintf(stderr,
+	
+
 "Usage: %s <mode> <complexity> <input...> <output>\n"
 "\n"
 "\tmode: possible options:\n"
@@ -59,6 +61,12 @@ int main(int argc,char **argv)
 			, argv[0]);
 		return 0;
 	}
+	int start=4, end=7;
+	start=atoi(argv[3]);
+	end=atoi(argv[4]);
+	
+
+
 
 /*#ifdef __x86_64__
 	INFO("oneKpaq v" ONEKPAQ_VERSION " 64-bit");
@@ -72,7 +80,7 @@ int main(int argc,char **argv)
 		StreamCodec::EncoderComplexity complexity=StreamCodec::EncoderComplexity(atoi(argv[2]));
 
 		std::vector<std::vector<u8>> blocks(argc-4);
-		for (uint i=0;i<uint(argc-4);i++) {
+		for (uint i=2;i<uint(argc-4);i++) {
 			blocks[i]=readFile(std::string(argv[i+3]));
 			ASSERT(blocks[i].size(),"Empty/missing file");
 		}
@@ -81,7 +89,7 @@ int main(int argc,char **argv)
 		//ASSERT(::stat(argv[argc-1],&st)==-1,"Destination file exists");
 
 		StreamCodec s;
-		s.Encode(blocks,mode,complexity,"onekpaq_context.cache");
+		s.Encode(blocks,mode,complexity,"onekpaq_context.cache",start,end);
 		auto stream=s.CreateSingleStream();
 
 #ifdef VERIFY_STREAM

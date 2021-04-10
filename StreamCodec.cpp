@@ -8,6 +8,7 @@
 #include <limits> /* std::numeric_limits */
 #include <string.h> /* memcmp */
 #include <stddef.h> /* size_t */
+#include <iostream>
 
 #include "onekpaq_common.h"
 
@@ -73,7 +74,7 @@ static BlockCodec::BlockCodecType StreamModetoBlockCodecType(StreamCodec::Encode
 	}[static_cast<uint>(em)-1];
 }
 
-void StreamCodec::Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode mode,EncoderComplexity complexity,const std::string &cacheFileName)
+void StreamCodec::Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode mode,EncoderComplexity complexity,const std::string &cacheFileName, int start, int end)
 {
 	ASSERT(blocks.size(),"Empty blocks");
 	ASSERT(uint(mode)&&mode<=EncodeMode::ModeLast,"Unknown mode");
@@ -118,8 +119,12 @@ void StreamCodec::Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode m
 			typedef std::vector<BlockKeyDef> CombinationDef;
 
 			float currentBestLength=std::numeric_limits<float>::infinity();
-			for (uint shift=4;shift<=4;shift++) {
+			for (uint shift=start;shift<=end;shift++) {
+				std::string output="\nSHIFT: ";
+				output.append(std::to_string(shift)+"\n");
+				DebugPrint(output.c_str());
 				// create possible combinations
+								
 				std::map<BlockKeyDef,BlockDef> blockMap;
 				std::vector<CombinationDef> combinations;
 				if (encodeBlocks.size()==1) {
@@ -158,6 +163,7 @@ void StreamCodec::Encode(const std::vector<std::vector<u8>> &blocks,EncodeMode m
 							blockMap.insert(std::make_pair(key,std::make_tuple(std::unique_ptr<BlockCodec>(new BlockCodec(bct,shift)),blockCount,std::vector<u8>(combinedBlocks.begin()+blockStart,combinedBlocks.begin()+blockStart+blockLength))));
 						}
 					}
+					
 				}
 
 				// process all possible combinations from map.
